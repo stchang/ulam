@@ -45,21 +45,7 @@
 
 
 ;; calculate ulams
-
-(define nats (from 1))
-
 (define id (λ (x) x))
-
-(define (ulam-sqrt n)
-  (if (= n 1)
-      (vector 0 0)
-      (match (ulam-sqrt (sub1 n))
-        [(vector x y) 
-         (let ([x-new (* -1 x)]
-               [y-new (* -1 y)])
-           (if (even? n)
-               (vector x-new (add1 y-new))
-               (vector (add1 x-new) y-new)))])))
 
 (define (ulams-from x y x-op y-op)
   (cons (vector x y)
@@ -80,6 +66,11 @@
              [(and (< x-new 0) (= x-new y-new))
               (ulams-from x-new y-new add1 id)]
              [else (ulams-from x-new y-new x-op y-op)])))))
+
+
+;; define streams
+
+(define nats (from 1))
 
 (define ulams (ulams-from 0 0 add1 id))
 
